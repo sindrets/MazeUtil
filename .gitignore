@@ -23,8 +23,9 @@
 hs_err_pid*
 
 # compiled output
-out
+build
 
 # misc
-.directory
+.gradle
 .idea
+.directory
