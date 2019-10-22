@@ -2,7 +2,8 @@ package no.stide;
 
 public enum CellForm {
 	WALL("██"),
-	PATH("  ");
+	PATH("  "),
+	CORRECT("▒▒");
 
 	private String image;
 

@@ -1,2 +1,2 @@
 rootProject.name = 'maze-util'
-
+gradle.ext.implementationName = 'mazeutil'

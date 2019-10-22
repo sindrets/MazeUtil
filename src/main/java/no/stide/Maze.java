@@ -1,11 +1,14 @@
 package no.stide;
 
 import no.stide.generators.MazeGenerator;
+import no.stide.solvers.MazeSolver;
 
 public class Maze {
 
 	private int width, height;
 	private Cell[][] grid;
+	private int[] entrance = null;
+	private int[] exit = null;
 
 	public Maze(int width, int height) {
 
@@ -45,6 +48,15 @@ public class Maze {
 		generator.generate(this);
 	}
 
+	public void solve(MazeSolver solver) {
+		if (entrance == null || exit == null) {
+			throw new RuntimeException("Entrance and/or exit undefined!");
+		}
+		this.setStateAll(CellState.UNKNOWN);
+		solver.solve(this, entrance[0], entrance[1], exit[0], exit[1]);
+	}
+
+	@Override
 	public String toString() {
 
 		StringBuilder result = new StringBuilder();
@@ -92,9 +104,29 @@ public class Maze {
 		}
 	}
 
+	public void setEntrance(int x, int y) {
+		if (this.entrance == null) {
+			this.entrance = new int[2];
+		}
+		this.entrance[0] = x;
+		this.entrance[1] = y;
+	}
+
+	public void setExit(int x, int y) {
+		if (this.exit == null) {
+			this.exit = new int[2];
+		}
+		this.exit[0] = x;
+		this.exit[1] = y;
+	}
+
 	public Cell getCell(int x, int y) {
 		if (x < 0 || x > width-1 || y < 0 || y > height-1) return null;
 		return grid[x][y];
+	}
+
+	public boolean isWall(int x, int y) {
+		return this.getCell(x, y).getForm() == CellForm.WALL;
 	}
 
 	public int getWidth() {

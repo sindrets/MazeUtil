@@ -1,10 +1,11 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
     id 'java'
     id "application"
 }
 
 group 'no.stide'
-version '1.0-SNAPSHOT'
+version '1.0.0'
 
 sourceCompatibility = 1.8
 mainClassName = "no.stide.MazeUtil"
@@ -15,14 +16,25 @@ repositories {
 
 dependencies {
     implementation "info.picocli:picocli:4.0.4"
+    annotationProcessor 'info.picocli:picocli-codegen:4.0.4'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+compileJava {
+    options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
+}
+
 jar {
-  manifest {
-    attributes(
-      'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-      'Main-Class': mainClassName
-    )
-  }
+    manifest {
+        attributes(
+                'Implementation-Title': gradle.implementationName,
+                'Version': version,
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': mainClassName
+        )
+    }
+}
+
+shadowJar {
+    archiveBaseName = project.name
 }

@@ -22,7 +22,6 @@ public class RandomizedPrim implements MazeGenerator {
 		int y = rand.nextInt(maze.getHeight() / 2) * 2 + 1;
 		Cell cell = maze.getCell(x, y);
 		walls.add(new Cell[] {cell, cell});
-		System.out.println(cell.toString());
 
 		while (walls.size() > 0) {
 
@@ -63,6 +62,13 @@ public class RandomizedPrim implements MazeGenerator {
 			}
 
 		}
+
+		Cell entrance = maze.getCell(0, 1);
+		Cell exit = maze.getCell(maze.getWidth() - 1, maze.getHeight() - 2);
+		entrance.setForm(CellForm.PATH);
+		exit.setForm(CellForm.PATH);
+		maze.setEntrance(entrance.getX(), entrance.getY());
+		maze.setExit(exit.getX(), exit.getY());
 
 	}
 

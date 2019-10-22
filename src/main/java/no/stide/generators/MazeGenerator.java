@@ -4,6 +4,6 @@ import no.stide.Maze;
 
 public interface MazeGenerator {
 
-	public void generate(Maze maze);
+	void generate(Maze maze);
 
 }
