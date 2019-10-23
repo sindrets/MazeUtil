@@ -56,9 +56,9 @@ public class MazeUtil {
 			static class FileConfig {
 				@Option(names = {"-f", "--file"}, paramLabel = "<path>", description = "Parse maze from file.")
 				String file;
-				@Parameters(index = "0", defaultValue = "██", description = "The wall pattern.")
+				@Option(names= {"--pattern-wall"}, defaultValue = "██", description = "The wall pattern.")
 				String mazeWall;
-				@Parameters(index = "1", defaultValue = "  ", description = "The path pattern.")
+				@Option(names= {"--pattern-path"}, defaultValue = "  ", description = "The path pattern.")
 				String mazePath;
 			}
 
@@ -173,7 +173,14 @@ public class MazeUtil {
 						if (config.operation.genConfig.out != null) {
 							String targetPath = new File(config.operation.genConfig.out).getCanonicalPath();
 							try (PrintWriter pw = new PrintWriter(targetPath)) {
-								pw.println(maze.toString());
+								String metadata = "";
+								if (maze.getEntrance() != null) {
+									metadata += "enter: " + maze.getEntrance()[0] + "," + maze.getEntrance()[1] + "\n";
+								}
+								if (maze.getExit() != null) {
+									metadata += "exit: " + maze.getExit()[0] + "," + maze.getExit()[1] + "\n\n";
+								}
+								pw.println(metadata + maze.toString());
 								System.out.println("Maze written to '" + targetPath + "'");
 							} catch (FileNotFoundException e) {
 								System.err.println("Could not write to file.");

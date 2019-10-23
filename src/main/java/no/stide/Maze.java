@@ -141,4 +141,12 @@ public class Maze {
 		return this.grid;
 	}
 
+	public int[] getEntrance() {
+		return this.entrance;
+	}
+
+	public int[] getExit() {
+		return this.exit;
+	}
+
 }
